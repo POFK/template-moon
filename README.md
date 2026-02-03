@@ -7,13 +7,10 @@ nix develop github:POFK/template-moon
 nix develop github:POFK/template-moon#fhs
 ```
 
-```bash
-moon init --yes
-```
+and the run
 
 ```bash
-moon toolchain add unstable_python
-moon toolchain add unstable_uv
+just init
 ```
 
 ### using template
@@ -32,3 +29,11 @@ moon generate python
 ```
 
 It will create a new package directory at packages/[name]
+
+You can use the following commands to add python related toolchains for moon@2.0.0-rc.0
+
+```bash
+moon toolchain add unstable_python
+moon toolchain add unstable_uv
+```
+
