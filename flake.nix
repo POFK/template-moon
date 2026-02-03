@@ -19,12 +19,15 @@
           cacert 
           openssl
           zlib
+
           # 如果你的系统需要编译 Go 代码，可能还需要 gcc/glibc
           gcc 
+
+	  # tools for better command 
+          just
           ];
 
         shellEnv = ''
-	  #export HTTPS_PROXY=http://10.0.0.11:7890
 	  echo "--- 🛡️  Multi-language Dev Environment Loaded ---"
 	  echo "Available tools:"
 	
