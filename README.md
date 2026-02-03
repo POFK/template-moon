@@ -1,32 +1,34 @@
 
+### init a new monorepo
 
+```bash
+nix develop github:POFK/template-moon
+# or
+nix develop github:POFK/template-moon#fhs
+```
 
-nix develop /home/worker/workspace/Proj/template-moon
-
-
+```bash
 moon init --yes
-
-
-### add python project
+```
 
 ```bash
 moon toolchain add unstable_python
 moon toolchain add unstable_uv
 ```
 
-```bash
-mkdir -p packages/exam_py
-cd packages/exam_py
-uv init
-```
+### using template
 
-add to .moon/workspace.yml
+edit the `.moon/workspace.yml`
 ```
 generator:
   templates:
-    - 'file:///home/worker/workspace/Proj/template-moon/templates'
-    - 'git://github.com/moonrepo/templates#master'
+    - 'git://github.com/POFK/template-moon#master'
 ```
 
+#### add a python package
 
+```bash
+moon generate python
+```
 
+It will create a new package directory at packages/[name]
