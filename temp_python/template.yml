@@ -1,0 +1,10 @@
+$schema: ../../.moon/cache/schemas/template.json
+title: Basic python project
+description: 'Basic python template for python 3.12'
+destination: 'packages/[name]'
+variables:
+  name:
+    type: 'string'
+    default: ''
+    required: true
+    prompt: 'Package name?'

@@ -1,0 +1,57 @@
+layer: 'tool'
+language: 'python'
+
+project:
+  name: '{{name}}'
+  channel: '#python'
+  owner: 'tx.mao'
+  maintainers: ['tx.mao']
+
+fileGroups:
+  sources:
+    - 'src/**/*'
+    - "pyproject.toml"
+    - "uv.lock"
+  tests:
+    - 'tests/**/*'
+
+tasks:
+  run:
+    command: 'uv run {{name}}'
+
+  clean:
+    script: "bash -c 'rm -rf build dist src/*.egg-info && find src/{{name}} -type f \\( -name \"*.c\" -o -name \"*.so\" \\) -delete'"
+
+  watch:
+    command: "uv run ptw . --no-cov -m '(stone or stable or alpha or doing) and (not slow)' --delay 1.0 --clear --tb=no"
+    inputs:
+      - '@group(sources)'
+      - '@group(tests)'
+
+  test:
+    command: "uv run pytest tests --no-cov -m '(stone or stable or alpha)' --benchmark-skip -n 4"
+    inputs:
+      - '@group(sources)'
+      - '@group(tests)'
+
+  lint:
+    command: "uv run pre-commit run --all-files"
+    inputs:
+      - '@group(sources)'
+      - ".pre-commit-config.yaml"
+
+  # 5. 类型检查
+  type-check:
+    command: "uv run mypy ./src"
+    inputs:
+      - '@group(sources)'
+
+  check:
+    deps:
+      - "lint"
+      - "type-check"
+
+  build:
+    command: "uv build"
+    inputs:
+      - '@group(sources)'
