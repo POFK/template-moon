@@ -16,9 +16,6 @@ fileGroups:
     - 'tests/**/*'
 
 tasks:
-  run:
-    command: 'uv run {{name}}'
-
   clean:
     script: "bash -c 'rm -rf build dist src/*.egg-info && find src/{{name}} -type f \\( -name \"*.c\" -o -name \"*.so\" \\) -delete'"
 
@@ -55,3 +52,20 @@ tasks:
     command: "uv build"
     inputs:
       - '@group(sources)'
+
+  install:
+    command: "uv sync"
+    inputs:
+      - 'pyproject.toml'
+      - 'uv.lock'
+
+  dev:
+    command: "uv sync --all-groups"
+    inputs:
+      - 'pyproject.toml'
+      - 'uv.lock'
+
+  run:
+    command: 'uv run {{name}}'
+
+
