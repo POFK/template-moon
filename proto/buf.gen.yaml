@@ -1,0 +1,28 @@
+version: v2
+managed:
+  enabled: true
+  override:
+    - file_option: go_package_prefix
+      value: gitlab.com/POFK/{{name}}/gen
+plugins:
+  - remote: buf.build/grpc-ecosystem/openapiv2:v2.27.7
+    out: gen/openapi
+  - remote: buf.build/bufbuild/protoschema-jsonschema:v0.5.2
+    out: gen/jsonschema
+  - remote: buf.build/protocolbuffers/python
+    out: gen/python
+  - remote: buf.build/grpc/python
+    out: gen/python
+  - local: protoc-gen-go
+    out: gen/go
+    opt: paths=source_relative
+  - local: protoc-gen-go-grpc
+    out: gen/go
+    opt: paths=source_relative
+
+  - local: protoc-gen-gorm
+    out: gen/go
+    opt:
+      - paths=source_relative
+  - local: protoc-gen-protobuf-to-pydantic
+    out: gen/python

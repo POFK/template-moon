@@ -1,7 +1,7 @@
 $schema: ../../.moon/cache/schemas/template.json
-title: Basic python project
-description: 'Basic python template for python 3.12'
-destination: '/packages/[name]'
+title: buf proto project
+description: Create buf proto project for generate apis.
+destination: '/proto/[name]'
 variables:
   name:
     type: 'string'

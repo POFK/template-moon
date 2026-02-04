@@ -1,0 +1,45 @@
+stack: 'infrastructure'
+layer: 'library'
+tags:
+  - 'proto'
+  - 'api'
+
+project:
+  name: '{{name}}'
+  channel: '#proto'
+  owner: 'tx.mao'
+  maintainers: ['tx.mao']
+
+fileGroups:
+  sources:
+    - 'proto/**/*'
+    - 'buf.gen.yaml'
+    - 'buf.yaml'
+
+tasks:
+  install-py-deps:
+    toolchain: 'unstable_python' 
+    command: 'uv sync'
+    inputs:
+      - 'pyproject.toml' # 触发 Python 环境检查
+
+  install-go-deps:
+    toolchain: 'go'
+    command: 'go install github.com/infobloxopen/protoc-gen-gorm@latest'
+    env:
+      GOBIN: "$workspaceRoot/.bin"
+    inputs:
+      - "moon.yml"
+    outputs:
+      - "/.bin/protoc-gen-gorm"
+
+  generate:
+    deps:
+      - '~:install-py-deps'
+      - '~:install-go-deps'
+    script: 'export PATH=$workspaceRoot/.bin:$PATH && buf generate -o ../'
+    inputs:
+      - '@group(sources)'
+      - 'requirements.txt' # 触发 Python 环境检查
+    outputs:
+      - '/proto/gen'

@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package user.v1;
+
+import "gorm/options.proto"; 
+
+message User {
+  option (gorm.opts).ormable = true;
+  string id = 1;
+  string username = 2;
+  string email = 3;
+}
+
+service UserService {
+  rpc GetUser(GetUserRequest) returns (GetUserResponse);
+}
+
+message GetUserRequest {
+  string id = 1;
+}
+
+message GetUserResponse {
+  User user = 1;
+}
