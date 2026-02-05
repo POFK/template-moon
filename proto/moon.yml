@@ -18,7 +18,7 @@ fileGroups:
     - 'buf.yaml'
 
 tasks:
-  install-py-deps:
+  pre-install-py-deps:
     toolchain: 'unstable_python' 
     command: 'uv sync'
     inputs:
@@ -26,7 +26,7 @@ tasks:
       - 'pyproject.toml' # 触发 Python 环境检查
       - 'uv.lock' # 触发 Python 环境检查
 
-  install-go-deps:
+  pre-install-go-deps:
     toolchain: 'go'
     command: 'go install github.com/infobloxopen/protoc-gen-gorm@latest'
     env:
@@ -36,15 +36,28 @@ tasks:
     outputs:
       - "/.bin/protoc-gen-gorm"
 
+  generate-only:
+    deps:
+      - '~:pre-install-py-deps'
+      - '~:pre-install-go-deps'
+    script: >
+      export PATH=$workspaceRoot/.bin:$PATH &&
+      buf generate -o ../ 
+    inputs:
+      - '@group(sources)'
+    outputs:
+      - '/proto/gen'
+
   generate:
     deps:
-      - '~:install-py-deps'
-      - '~:install-go-deps'
+      - '~:pre-install-py-deps'
+      - '~:pre-install-go-deps'
     script: >
       export PATH=$workspaceRoot/.bin:$PATH &&
       buf generate -o ../ &&
       cd $workspaceRoot/proto/gen/go &&
-      go mod init gitlab.com/POFK/{{project}}/proto/gen &&
+      go mod init github.com/POFK/{{project}}/proto &&
+      go mod tidy &&
       cd - &&
       echo "Done"
     inputs:

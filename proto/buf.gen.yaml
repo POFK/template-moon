@@ -3,7 +3,7 @@ managed:
   enabled: true
   override:
     - file_option: go_package_prefix
-      value: gitlab.com/POFK/{{project}}/proto/gen
+      value: github.com/POFK/{{project}}/proto
 plugins:
   - remote: buf.build/grpc-ecosystem/openapiv2:v2.27.7
     out: gen/openapi
@@ -19,7 +19,6 @@ plugins:
   - local: protoc-gen-go-grpc
     out: gen/go
     opt: paths=source_relative
-
   - local: protoc-gen-gorm
     out: gen/go
     opt:
