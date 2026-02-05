@@ -12,6 +12,7 @@ project:
 
 fileGroups:
   sources:
+    - "moon.yml"
     - 'proto/**/*'
     - 'buf.gen.yaml'
     - 'buf.yaml'
@@ -21,7 +22,9 @@ tasks:
     toolchain: 'unstable_python' 
     command: 'uv sync'
     inputs:
+      - "moon.yml"
       - 'pyproject.toml' # 触发 Python 环境检查
+      - 'uv.lock' # 触发 Python 环境检查
 
   install-go-deps:
     toolchain: 'go'
@@ -40,6 +43,5 @@ tasks:
     script: 'export PATH=$workspaceRoot/.bin:$PATH && buf generate -o ../'
     inputs:
       - '@group(sources)'
-      - 'requirements.txt' # 触发 Python 环境检查
     outputs:
       - '/proto/gen'
