@@ -56,7 +56,7 @@ tasks:
       export PATH=$workspaceRoot/.bin:$PATH &&
       buf generate -o ../ &&
       cd $workspaceRoot/proto/gen/go &&
-      go mod init github.com/POFK/{{project}}/proto &&
+      go mod init github.com/POFK/go-{{project}}/proto &&
       go mod tidy &&
       cd - &&
       echo "Done"
