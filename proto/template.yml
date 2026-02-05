@@ -5,11 +5,11 @@ destination: '/proto/[name]'
 variables:
   name:
     type: 'string'
-    default: ''
+    default: 'proto'
     required: true
-    prompt: 'Package name?'
+    prompt: 'project name?'
   project:
     type: 'string'
     default: ''
     required: true
-    prompt: 'The project name?'
+    prompt: 'The golang package name?'
