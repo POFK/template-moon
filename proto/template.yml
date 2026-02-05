@@ -8,3 +8,8 @@ variables:
     default: ''
     required: true
     prompt: 'Package name?'
+  project:
+    type: 'string'
+    default: ''
+    required: true
+    prompt: 'The project name?'

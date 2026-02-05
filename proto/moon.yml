@@ -40,7 +40,13 @@ tasks:
     deps:
       - '~:install-py-deps'
       - '~:install-go-deps'
-    script: 'export PATH=$workspaceRoot/.bin:$PATH && buf generate -o ../'
+    script: >
+      export PATH=$workspaceRoot/.bin:$PATH &&
+      buf generate -o ../ &&
+      cd $workspaceRoot/proto/gen/go &&
+      go mod init gitlab.com/POFK/{{project}}/proto/gen &&
+      cd - &&
+      echo "Done"
     inputs:
       - '@group(sources)'
     outputs:
