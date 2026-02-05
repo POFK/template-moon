@@ -32,6 +32,12 @@
 
             # tools for better command
             just
+
+            # proto buf
+            buf
+            protoc-gen-go
+            protoc-gen-go-grpc
+            grpcurl      # 类似 curl，但用于 gRPC
           ];
 
         justfileContent = builtins.readFile ./justfile;
@@ -53,6 +59,11 @@
           ${scriptAddJustfile}
           echo "--- 🛡️  Multi-language Dev Environment Loaded ---"
           echo "Available tools:"
+
+          if command -v buf&> /dev/null; then
+	    source <(buf completion bash)
+            echo "  - buf: $(buf --version)"
+          fi
 
           if command -v proto &> /dev/null; then
             source <(proto activate)
