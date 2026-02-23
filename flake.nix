@@ -4,6 +4,7 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
+    opencode.url = "github:anomalyco/opencode";
   };
 
   outputs =
@@ -11,6 +12,7 @@
       self,
       nixpkgs,
       flake-utils,
+      opencode,
     }:
     flake-utils.lib.eachDefaultSystem (
       system:
@@ -38,6 +40,9 @@
             protoc-gen-go
             protoc-gen-go-grpc
             grpcurl      # 类似 curl，但用于 gRPC
+
+	    # opencode
+            opencode.packages.${system}.opencode
           ];
 
         justfileContent = builtins.readFile ./justfile;
@@ -72,6 +77,10 @@
 
           if command -v moon &> /dev/null; then
             echo "  - moon: $(moon --version)"
+          fi
+
+          if command -v opencode &> /dev/null; then
+            echo "  - opencode: $(opencode --version)"
           fi
 
           if [[ -n "$BASH_VERSION" && $- == *i* ]]; then
