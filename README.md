@@ -37,3 +37,10 @@ moon toolchain add unstable_python
 moon toolchain add unstable_uv
 ```
 
+### golang
+
+#### enable gowork
+
+```bash
+go work init
+```
