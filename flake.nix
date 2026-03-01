@@ -5,6 +5,7 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
     opencode.url = "github:anomalyco/opencode";
+    openspec.url = "github:Fission-AI/OpenSpec";
   };
 
   outputs =
@@ -13,6 +14,7 @@
       nixpkgs,
       flake-utils,
       opencode,
+      openspec,
     }:
     flake-utils.lib.eachDefaultSystem (
       system:
@@ -41,8 +43,9 @@
             protoc-gen-go-grpc
             grpcurl      # 类似 curl，但用于 gRPC
 
-	    # opencode
+	    # AI SDD
             opencode.packages.${system}.opencode
+            openspec.packages.${system}.default
           ];
 
         justfileContent = builtins.readFile ./justfile;
@@ -81,6 +84,10 @@
 
           if command -v opencode &> /dev/null; then
             echo "  - opencode: $(opencode --version)"
+          fi
+
+          if command -v openspec &> /dev/null; then
+            echo "  - openspec: $(openspec --version)"
           fi
 
           if [[ -n "$BASH_VERSION" && $- == *i* ]]; then
