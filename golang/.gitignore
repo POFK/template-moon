@@ -1,0 +1,33 @@
+# Go 模块文件
+go.mod
+
+# Go 依赖文件
+go.sum
+
+# 编译输出
+dist/
+build/
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+
+# 测试覆盖率
+coverage.out
+
+# 编辑器
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 操作系统
+.DS_Store
+Thumbs.db
+
+# 临时文件
+tmp/
+temp/

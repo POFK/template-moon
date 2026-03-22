@@ -1,0 +1,80 @@
+layer: 'library'
+language: 'golang'
+
+stack: 'infrastructure'
+tags:
+  - 'server'
+  - 'go'
+
+project:
+  name: '{{name}}'
+  channel: '#golang'
+  owner: 'tx.mao'
+  maintainers: ['tx.mao']
+
+fileGroups:
+  sources:
+    - '**/*.go'
+    - 'go.mod'
+    - 'go.sum'
+  tests:
+    - '**/*_test.go'
+  proto:
+    - 'proto/**/*.proto'
+
+tasks:
+  test:
+    command: 'go test -v ./...'
+    inputs:
+      - '@group(sources)'
+      - '@group(tests)'
+
+  test-race:
+    command: 'go test -race ./...'
+    inputs:
+      - '@group(sources)'
+      - '@group(tests)'
+
+  test-coverage:
+    command: 'go test -cover ./...'
+    inputs:
+      - '@group(sources)'
+      - '@group(tests)'
+
+  lint:
+    command: 'go fmt ./...'
+    inputs:
+      - '@group(sources)'
+
+  tidy:
+    command: 'go mod tidy'
+    inputs:
+      - 'go.mod'
+      - 'go.sum'
+
+  build:
+    command: 'go build -v ./...'
+    inputs:
+      - '@group(sources)'
+
+  build-debug:
+    command: 'go build -v ./...'
+    inputs:
+      - '@group(sources)'
+
+  build-release:
+    command: "go build -ldflags='-w -s' -v ./..."
+    inputs:
+      - '@group(sources)'
+
+  proto-generate:
+    command: 'moonx proto:generate'
+    inputs:
+      - '@group(proto)'
+    outputs:
+      - 'proto/gen/go/**/*'
+
+  check:
+    deps:
+      - 'lint'
+      - 'test'
