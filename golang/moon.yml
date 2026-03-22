@@ -1,5 +1,5 @@
 layer: 'library'
-language: 'golang'
+language: 'go'
 
 stack: 'infrastructure'
 tags:
