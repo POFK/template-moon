@@ -1,0 +1,10 @@
+$schema: ../../.moon/cache/schemas/template.json
+title: Basic golang project
+description: 'Basic golang template for Go 1.25.0'
+destination: '/packages/[name]'
+variables:
+  name:
+    type: 'string'
+    default: ''
+    required: true
+    prompt: 'Package name?'
