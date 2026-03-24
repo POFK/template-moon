@@ -1,0 +1,101 @@
+layer: 'library'
+language: 'go'
+
+stack: 'infrastructure'
+tags:
+  - 'server'
+  - 'go'
+  - 'proto'
+
+project:
+  name: '{{name}}'
+  channel: '#golang'
+  owner: 'tx.mao'
+  maintainers: ['tx.mao']
+
+fileGroups:
+  sources:
+    - '**/*.go'
+    - 'go.mod'
+    - 'go.sum'
+  tests:
+    - '**/*_test.go'
+  proto:
+    - 'proto/**/*.proto'
+  proto-config:
+    - 'buf.yaml'
+    - 'buf.gen.yaml'
+
+tasks:
+  test:
+    command: 'go test -v ./...'
+    inputs:
+      - '@group(sources)'
+      - '@group(tests)'
+
+  test-race:
+    command: 'go test -race ./...'
+    inputs:
+      - '@group(sources)'
+      - '@group(tests)'
+
+  test-coverage:
+    command: 'go test -cover ./...'
+    inputs:
+      - '@group(sources)'
+      - '@group(tests)'
+
+  lint:
+    command: 'go fmt ./...'
+    inputs:
+      - '@group(sources)'
+
+  tidy:
+    command: 'go mod tidy'
+    inputs:
+      - 'go.mod'
+      - 'go.sum'
+
+  proto-install-tools:
+    command: 'bash scripts/install-proto-tools.sh'
+    inputs:
+      - 'scripts/install-proto-tools.sh'
+    outputs:
+      - '$GOPATH/bin/protoc-gen-go'
+      - '$GOPATH/bin/protoc-gen-go-grpc'
+      - '$GOPATH/bin/protoc-gen-gorm'
+
+  proto-generate:
+    deps:
+      - 'proto-install-tools'
+    command: 'buf generate'
+    inputs:
+      - '@group(proto)'
+      - '@group(proto-config)'
+      - 'third_party/**/*.proto'
+    outputs:
+      - 'internal/gen/**/*'
+
+  proto-clean:
+    command: 'rm -rf internal/gen'
+
+  build:
+    command: 'go build -v ./...'
+    inputs:
+      - '@group(sources)'
+
+  build-debug:
+    command: 'go build -v ./...'
+    inputs:
+      - '@group(sources)'
+
+  build-release:
+    command: "go build -ldflags='-w -s' -v ./..."
+    inputs:
+      - '@group(sources)'
+
+  check:
+    deps:
+      - 'lint'
+      - 'test'
+      - 'proto-generate'
