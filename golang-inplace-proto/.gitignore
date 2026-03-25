@@ -9,7 +9,7 @@ build/
 *.test
 
 # 生成的代码
-internal/gen/
+gen/
 
 # 测试覆盖率
 coverage.out

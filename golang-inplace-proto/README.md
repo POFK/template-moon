@@ -16,7 +16,7 @@ Go project with integrated buf protobuf toolchain for in-place proto code genera
 ### Proto & API Design
 - **Single Source of Truth** — `proto/` is the authoritative source for all data structures and API definitions
 - **No Duplication** — Define business structures and APIs only in proto files, never in Go code
-- **Generated Code Only** — Import from `internal/gen/`, never hand-write or modify generated files
+- **Generated Code Only** — Import from `gen/`, never hand-write or modify generated files
 
 ## Project Structure
 

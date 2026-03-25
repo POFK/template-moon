@@ -91,10 +91,10 @@ tasks:
       - '@group(proto-config)'
       - 'third_party/**/*.proto'
     outputs:
-      - 'internal/gen/**/*'
+      - 'gen/**/*'
 
   proto-clean:
-    command: 'rm -rf internal/gen'
+    command: 'rm -rf gen'
 
   build:
     command: 'go build -v ./...'
