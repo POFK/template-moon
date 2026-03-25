@@ -1,4 +1,4 @@
-module git.pangu.datalab/{{name}}
+module git.pangu.datalab/{{user}}/{{project_name}}/{{name}}
 
 go 1.25.0
 

@@ -1,10 +1,20 @@
 $schema: ../../.moon/cache/schemas/template.json
 title: Go project with in-place proto support
 description: Go 1.25.0 project with integrated buf protobuf toolchain
-destination: '/packages/[name]'
+destination: '/packages/[project_name]/[name]'
 variables:
+  user:
+    type: 'string'
+    default: 'datalab'
+    required: false
+    prompt: 'Git username or organization?'
+  project_name:
+    type: 'string'
+    default: ''
+    required: true
+    prompt: 'Monorepo project name?'
   name:
     type: 'string'
     default: ''
     required: true
-    prompt: 'Package name?'
+    prompt: 'Package name (under project)?'

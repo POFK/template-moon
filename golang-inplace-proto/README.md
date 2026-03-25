@@ -166,7 +166,7 @@ buf generate
 
 ```go
 import (
-    pb "git.pangu.datalab/{{name}}/internal/gen/user/v1"
+    pb "git.pangu.datalab/{{user}}/{{project_name}}/{{name}}/internal/gen/user/v1"
 )
 
 func main() {
