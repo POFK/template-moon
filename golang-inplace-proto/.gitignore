@@ -1,6 +1,3 @@
-# Go 模块文件
-go.mod
-
 # Go 依赖文件
 go.sum
 

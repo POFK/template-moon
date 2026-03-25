@@ -17,8 +17,8 @@ curl -sSL "https://github.com/bufbuild/buf/releases/latest/download/buf-$(uname 
 ### 2. Install Proto Generation Tools
 
 ```bash
-# Install all required protoc plugins
-bash scripts/install-proto-tools.sh
+# Install all required protoc plugins using moon
+moon run proto-install-tools
 ```
 
 This installs:
@@ -44,8 +44,9 @@ Generated code will be placed in `internal/gen/`
 .
 ├── proto/                  # Proto source files
 │   ├── buf.yaml           # Proto lint/breaking config
-│   └── v1/
-│       └── user.proto     # Example proto definition
+│   └── user/
+│       └── v1/
+│           └── user.proto # Example proto definition
 ├── third_party/           # Third-party proto files
 │   ├── buf.yaml
 │   └── gorm/
@@ -53,7 +54,7 @@ Generated code will be placed in `internal/gen/`
 │       └── types.proto    # GORM custom types
 ├── internal/
 │   └── gen/              # Generated code (gitignored)
-│       └── proto/
+│       └── user/
 │           └── v1/
 │               ├── user.pb.go      # Protobuf types
 │               ├── user_grpc.pb.go # gRPC service client/server
@@ -61,9 +62,7 @@ Generated code will be placed in `internal/gen/`
 ├── buf.yaml               # Root buf configuration
 ├── buf.gen.yaml           # Code generation plugins config
 ├── go.mod
-├── go.sum
-└── scripts/
-    └── install-proto-tools.sh
+└── go.sum
 ```
 
 ## Available Commands
@@ -131,7 +130,7 @@ go mod tidy
 1. Create new `.proto` file in `proto/` directory:
 
 ```proto
-// proto/v1/my_service.proto
+// proto/user/v1/my_service.proto
 syntax = "proto3";
 
 package myservice.v1;
@@ -167,7 +166,7 @@ buf generate
 
 ```go
 import (
-    pb "git.pangu.datalab/<project-name>/internal/gen/proto/v1"
+    pb "git.pangu.datalab/{{name}}/internal/gen/user/v1"
 )
 
 func main() {

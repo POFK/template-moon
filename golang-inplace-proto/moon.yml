@@ -56,14 +56,31 @@ tasks:
       - 'go.mod'
       - 'go.sum'
 
-  proto-install-tools:
-    command: 'bash scripts/install-proto-tools.sh'
+  pre-install-go-protogengorm:
+    toolchain: 'go'
+    command: 'go install github.com/infobloxopen/protoc-gen-gorm@latest'
+    env:
+      GOBIN: "$workspaceRoot/.bin"
     inputs:
-      - 'scripts/install-proto-tools.sh'
+      - "moon.yml"
     outputs:
-      - '$GOPATH/bin/protoc-gen-go'
-      - '$GOPATH/bin/protoc-gen-go-grpc'
-      - '$GOPATH/bin/protoc-gen-gorm'
+      - "/.bin/protoc-gen-gorm"
+
+  pre-install-go-protogengo:
+    toolchain: 'go'
+    command: 'go install google.golang.org/protobuf/cmd/protoc-gen-go@latest'
+    env:
+      GOBIN: "$workspaceRoot/.bin"
+    inputs:
+      - "moon.yml"
+    outputs:
+      - "/.bin/protoc-gen-go"
+
+
+  proto-install-tools:
+    deps:
+      - '~:pre-install-go-protogengorm'
+      - '~:pre-install-go-protogengo'
 
   proto-generate:
     deps:
