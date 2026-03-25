@@ -1,7 +1,7 @@
 $schema: ../../.moon/cache/schemas/template.json
 title: Go project with in-place proto support
 description: Go 1.25.0 project with integrated buf protobuf toolchain
-destination: '/packages/[project_name]/[name]'
+destination: '/packages/[name]'
 variables:
   user:
     type: 'string'
