@@ -4,8 +4,6 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
-    opencode.url = "github:anomalyco/opencode";
-    openspec.url = "github:Fission-AI/OpenSpec";
   };
 
   outputs =
@@ -13,8 +11,6 @@
       self,
       nixpkgs,
       flake-utils,
-      opencode,
-      openspec,
     }:
     flake-utils.lib.eachDefaultSystem (
       system:
@@ -44,8 +40,6 @@
             grpcurl      # 类似 curl，但用于 gRPC
 
 	    # AI SDD
-            opencode.packages.${system}.opencode
-            openspec.packages.${system}.default
           ];
 
         justfileContent = builtins.readFile ./justfile;
@@ -118,7 +112,7 @@
       {
         devShells.fhs = myFhs.env;
 
-        devShells.default = pkgs.mkShell {
+        devShells.nofhs = pkgs.mkShell {
           buildInputs = shellPkgs pkgs;
           shellHook = ''
                       ${shellEnv}
@@ -127,6 +121,8 @@
             	  echo "🚀 Entered non-FHS environment!"
             	'';
         };
+
+        devShells.default = myFhs.env;
       }
     );
 }
