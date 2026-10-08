@@ -22,6 +22,7 @@
         shellPkgs =
           pkgs: with pkgs; [
             proto
+            moon
 
             cacert
             openssl
@@ -38,8 +39,6 @@
             protoc-gen-go
             protoc-gen-go-grpc
             grpcurl      # 类似 curl，但用于 gRPC
-
-	    # AI SDD
           ];
 
         justfileContent = builtins.readFile ./justfile;
@@ -76,14 +75,6 @@
             echo "  - moon: $(moon --version)"
           fi
 
-          if command -v opencode &> /dev/null; then
-            echo "  - opencode: $(opencode --version)"
-          fi
-
-          if command -v openspec &> /dev/null; then
-            echo "  - openspec: $(openspec --version)"
-          fi
-
           if [[ -n "$BASH_VERSION" && $- == *i* ]]; then
             if type complete &>/dev/null; then
               [ -n "$(command -v proto)" ] && source <(proto completions --shell bash)
@@ -112,17 +103,14 @@
       {
         devShells.fhs = myFhs.env;
 
-        devShells.nofhs = pkgs.mkShell {
+        devShells.default = pkgs.mkShell {
           buildInputs = shellPkgs pkgs;
           shellHook = ''
                       ${shellEnv}
 
             	  export MY_CUSTOM_VAR="default-mode"
-            	  echo "🚀 Entered non-FHS environment!"
             	'';
         };
-
-        devShells.default = myFhs.env;
       }
     );
 }
