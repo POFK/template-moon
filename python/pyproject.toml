@@ -135,8 +135,3 @@ warn_unused_ignores = true
 [tool.uv]
 package = true
 
-[[tool.uv.index]]
-name = "pangu-mirror"
-url = "http://dev.pangu.datalab:7788/pypi/simple"
-default = true
-
