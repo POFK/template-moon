@@ -1,0 +1,10 @@
+$schema: ../../.moon/cache/schemas/template.json
+title: Basic typescript project
+description: 'Basic TypeScript template with pnpm, ESLint, and tsc'
+destination: '/packages/[name]'
+variables:
+  name:
+    type: 'string'
+    default: ''
+    required: true
+    prompt: 'Package name?'

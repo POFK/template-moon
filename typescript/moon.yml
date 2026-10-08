@@ -1,0 +1,59 @@
+layer: 'library'
+language: 'typescript'
+
+project:
+  name: '{{name}}'
+  channel: '#typescript'
+  owner: 'tx.mao'
+  maintainers: ['tx.mao']
+
+fileGroups:
+  sources:
+    - 'src/**/*'
+    - 'tsconfig.json'
+    - 'package.json'
+  tests:
+    - 'tests/**/*'
+
+tasks:
+  clean:
+    script: "bash -c 'rm -rf dist'"
+
+  typecheck:
+    command: "pnpm exec tsc --noEmit"
+    inputs:
+      - '@group(sources)'
+
+  lint:
+    command: "pnpm exec eslint src/ tests/"
+    inputs:
+      - '@group(sources)'
+      - '@group(tests)'
+      - 'eslint.config.js'
+
+  check:
+    deps:
+      - 'lint'
+      - 'typecheck'
+
+  build:
+    command: "pnpm exec tsc"
+    inputs:
+      - '@group(sources)'
+    outputs:
+      - 'dist/**/*'
+
+  install:
+    command: "pnpm install --frozen-lockfile"
+    inputs:
+      - 'package.json'
+      - '/pnpm-lock.yaml'
+
+  dev:
+    command: "pnpm install"
+    inputs:
+      - 'package.json'
+      - '/pnpm-lock.yaml'
+
+  run:
+    command: "pnpm exec tsx src/index.ts"
