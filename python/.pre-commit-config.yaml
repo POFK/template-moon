@@ -1,5 +1,5 @@
-# See https://pre-commit.com for more information
-# See https://pre-commit.com/hooks.html for more hooks
+# See https://github.com/j178/prek for more information
+# See https://pre-commit.com/hooks.html for available hooks (prek is compatible)
 
 repos:
 # 1. 基础文件检查 (来自 pre-commit 官方)
@@ -30,6 +30,4 @@ repos:
   hooks:
   - id: detect-secrets
     args: ['--baseline', '.secrets.baseline']
-    exclude: package.lock.json
-
-
+    exclude: uv.lock

@@ -29,7 +29,7 @@ uv run ptw . --no-cov -m '(stone or stable or alpha or doing) and (not slow)'
 # Linting
 uv run ruff check .              # Lint (auto-fix: --fix)
 uv run ruff format .             # Format code
-uv run pre-commit run --all-files  # All pre-commit hooks
+prek run --all-files              # All git hooks (via prek)
 
 # Type checking
 uv run mypy ./src
@@ -165,7 +165,7 @@ moon run proto:generate
 
 ## Pre-commit Hooks
 
-Python projects use pre-commit with:
+Python projects use prek (pre-commit compatible) with:
 - trailing-whitespace
 - end-of-file-fixer
 - check-yaml/json/toml
@@ -173,7 +173,7 @@ Python projects use pre-commit with:
 - ruff-format
 - detect-secrets
 
-Run manually: `uv run pre-commit run --all-files`
+Run manually: `prek run --all-files`
 
 ## Test Markers (Python)
 

@@ -32,7 +32,7 @@ tasks:
       - '@group(tests)'
 
   lint:
-    command: "uv run pre-commit run --all-files"
+    command: "prek run --all-files"
     inputs:
       - '@group(sources)'
       - ".pre-commit-config.yaml"

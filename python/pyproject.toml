@@ -10,7 +10,6 @@ dependencies = ["loguru>=0.7.0", "typer>=0.15.2"]
 [dependency-groups]
 dev = [
     "radon>=5.1.0",
-    "pre-commit>=4.2.0",
     "detect-secrets>=1.5.0",
 ]
 
