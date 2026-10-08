@@ -16,6 +16,7 @@ import tomllib
 
 from setuptools import Extension, find_packages, setup
 from setuptools.command.build_ext import build_ext
+from setuptools.command.build_py import build_py as _build_py
 
 
 # ---------------------------------------------------------------------------
@@ -85,7 +86,8 @@ if build_mode == "cython":
     )
     print(f"[BUILD] Cython mode: {len(ext_modules)} modules → .so")
     if exclude_from_cython:
-        print(f"         {len(exclude_from_cython)} files excluded from compilation (stay .py)")
+        n = len(exclude_from_cython)
+        print(f"         {n} files excluded from compilation (stay .py)")
 else:
     print("[BUILD] Pure Python mode: all source included in wheel")
 
@@ -134,8 +136,6 @@ class HardenedBuildExt(build_ext):
 # ---------------------------------------------------------------------------
 # Custom build_py: remove hidden .py files after they're copied to build dir
 # ---------------------------------------------------------------------------
-
-from setuptools.command.build_py import build_py as _build_py
 
 
 class FilteredBuildPy(_build_py):
