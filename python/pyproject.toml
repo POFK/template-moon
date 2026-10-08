@@ -42,11 +42,16 @@ requires = ["setuptools>=64", "setuptools-scm>=8", "wheel", "Cython"]
 build-backend = "setuptools.build_meta"
 
 [tool.builder-opt]
-# 这里的配置会被你的自定义构建脚本读取，保持原样
+# 这里的配置会被 setup.py 构建脚本读取
+# cython_modules_path: 这些目录下的非 __init__.py 文件在 BUILD_MODE=cython 时编译为 .so
 cython_modules_path = [
-    "src/{{name}}/utils", 
-    "src/{{name}}/cli", 
+    "src/{{name}}/utils",
+    "src/{{name}}/cli",
 ]
+# exclude_from_cython: 即使在上面的目录中，这些文件也不编译（保留为 .py）
+exclude_from_cython = []
+# exclude_from_package: 这些文件任何模式下都不打包进 wheel
+exclude_from_package = []
 
 [tool.setuptools_scm]
 tag_regex = '^v(\d+\.\d+\.\d+)$'

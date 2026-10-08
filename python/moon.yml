@@ -53,6 +53,11 @@ tasks:
     inputs:
       - '@group(sources)'
 
+  build-cython:
+    command: "BUILD_MODE=cython uv build"
+    inputs:
+      - '@group(sources)'
+
   install:
     command: "uv sync"
     inputs:
